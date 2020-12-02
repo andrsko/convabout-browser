@@ -1,14 +1,23 @@
 // A wrapper around fetch()
 // https://kentcdodds.com/blog/replace-axios-with-a-simple-custom-fetch-wrapper
 
-export async function apiClient(endpoint, { body, ...customConfig } = {}) {
+export async function apiClient(
+  endpoint,
+  { body, token, ...customConfig } = {}
+) {
   const API_URL =
     process.env.NODE_ENV === "production"
       ? process.env.REACT_APP_PROD_API_URL
       : process.env.REACT_APP_DEV_API_URL;
 
-  const headers = { "Content-Type": "application/json" };
-
+  console.log("TOKEN: " + token);
+  const headers = {
+    "Content-Type": "application/json",
+    ...(token && {
+      Authorization: "Bearer " + token,
+    }),
+  };
+  console.log("HEADERS: " + headers);
   const config = {
     method: body ? "POST" : "GET",
     ...customConfig,
@@ -35,10 +44,10 @@ export async function apiClient(endpoint, { body, ...customConfig } = {}) {
   }
 }
 
-apiClient.get = function (endpoint, customConfig = {}) {
-  return apiClient(endpoint, { ...customConfig, method: "GET" });
+apiClient.get = function (endpoint, token, customConfig = {}) {
+  return apiClient(endpoint, { ...customConfig, token, method: "GET" });
 };
 
-apiClient.post = function (endpoint, body, customConfig = {}) {
-  return apiClient(endpoint, { ...customConfig, body });
+apiClient.post = function (endpoint, token, body, customConfig = {}) {
+  return apiClient(endpoint, { ...customConfig, token, body });
 };
