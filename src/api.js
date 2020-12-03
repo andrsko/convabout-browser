@@ -10,14 +10,13 @@ export async function apiClient(
       ? process.env.REACT_APP_PROD_API_URL
       : process.env.REACT_APP_DEV_API_URL;
 
-  console.log("TOKEN: " + token);
   const headers = {
     "Content-Type": "application/json",
     ...(token && {
       Authorization: "Bearer " + token,
     }),
   };
-  console.log("HEADERS: " + headers);
+
   const config = {
     method: body ? "POST" : "GET",
     ...customConfig,
