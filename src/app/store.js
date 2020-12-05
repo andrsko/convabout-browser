@@ -3,9 +3,11 @@ import { combineReducers } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 import authReducer from "../features/auth/authSlice";
+import postsReducer from "../features/posts/postsSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  posts: postsReducer,
 });
 
 const persistConfig = {
