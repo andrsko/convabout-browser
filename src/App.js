@@ -5,15 +5,18 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-//import logo from "./logo.svg";
+
+import { Header } from "./app/Header";
+
+import { SignUpForm } from "./features/auth/SignUpForm";
+import { SignInForm } from "./features/auth/SignInForm";
+
 import "./App.css";
 
 function App() {
   return (
     <Router>
-      {/*<header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-      </header>*/}
+      <Header />
       <div className="App">
         <Switch>
           <Route
@@ -21,6 +24,8 @@ function App() {
             path="/"
             render={() => <React.Fragment></React.Fragment>}
           />
+          <Route exact path="/signup" component={SignUpForm} />
+          <Route exact path="/signin" component={SignInForm} />
           <Redirect to="/" />
         </Switch>
       </div>
