@@ -1,6 +1,6 @@
 const timeAgo = (date) => {
   const differenceInSeconds = Math.floor(
-    (new Date() - Date.parse(date)) / 1000
+    (new Date() - new Date(date + "Z")) / 1000
   );
   if (differenceInSeconds < 15) return "just now";
   const durationNames = ["year", "month", "day", "hour", "minute"];
