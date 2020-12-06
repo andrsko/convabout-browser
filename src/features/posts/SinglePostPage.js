@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 import timeAgo from "../../utils/timeAgo";
 import { fetchPost } from "./postsSlice";
 
-export const SinglePostPage = ({ match }) => {
-  const { postId } = match.params;
+export const SinglePostPage = () => {
+  let location = useLocation();
   const dispatch = useDispatch();
   const post = useSelector((state) => state.posts.post);
 
@@ -13,8 +14,9 @@ export const SinglePostPage = ({ match }) => {
   const error = useSelector((state) => state.posts.postError);
 
   useEffect(() => {
+    let postId = new URLSearchParams(location.search).get("p");
     dispatch(fetchPost(postId));
-  }, [dispatch, postId]);
+  }, [dispatch, location]);
 
   let content;
 

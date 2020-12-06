@@ -8,7 +8,7 @@ import { fetchPosts } from "./postsSlice";
 const PostExcerpt = ({ post }) => {
   return (
     <article className="post-excerpt" key={post.id}>
-      <Link to={`/posts/${post.id}`}>
+      <Link to={`/chat?p=${post.id}`}>
         <h3>{post.title}</h3>
       </Link>
       <div>

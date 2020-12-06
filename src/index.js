@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import store, { persistor } from "./app/store";
+import WebSocketProvider from "./app/websocket";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import * as serviceWorker from "./serviceWorker";
@@ -11,7 +12,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <App />
+        <WebSocketProvider>
+          <App />
+        </WebSocketProvider>
       </PersistGate>
     </Provider>
   </React.StrictMode>,
