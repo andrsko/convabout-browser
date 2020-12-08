@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Convabout",
+  "name": "Convabout",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,12 +8,29 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "favicon-72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    }, {
+      "src": "favicon-96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    }, {
+      "src": "favicon-144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    }, {
+      "src": "favicon-168.png",
+      "sizes": "168x168",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon-192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "favicon-512.png",
       "type": "image/png",
       "sizes": "512x512"
     }

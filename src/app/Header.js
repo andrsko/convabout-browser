@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { signOut } from "../features/auth/authSlice";
-
+import logo from "../logo.svg";
 import "../App.css";
 
 export const Header = () => {
@@ -26,6 +26,7 @@ export const Header = () => {
   );
   return (
     <header className="App-header">
+      <img src={logo} className="App-logo" alt="logo" />
       <Link to="/">Home</Link>
       {content}
     </header>
