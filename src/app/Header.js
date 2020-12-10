@@ -28,6 +28,7 @@ export const Header = () => {
     <header className="App-header">
       <img src={logo} className="App-logo" alt="logo" />
       <Link to="/">Home</Link>
+      <Link to="/submit">New conversation</Link>
       {content}
     </header>
   );
