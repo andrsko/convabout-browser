@@ -6,7 +6,7 @@ import {
   Redirect,
 } from "react-router-dom";
 
-import { Header } from "./app/Header";
+import { Header } from "./app/header/Header";
 
 import { PostList } from "./features/posts/PostList";
 import { AddPostForm } from "./features/posts/AddPostForm";

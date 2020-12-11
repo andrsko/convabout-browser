@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { signOut } from "../features/auth/authSlice";
-import logo from "../logo.svg";
+import { signOut } from "../../features/auth/authSlice";
+import logo from "../../logo.svg";
 import add from "./add.svg";
 import home from "./home.svg";
 import more from "./more.svg";
