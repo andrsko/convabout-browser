@@ -15,13 +15,11 @@ import { ChatWindow } from "./features/chat/ChatWindow";
 import { SignUpForm } from "./features/auth/SignUpForm";
 import { SignInForm } from "./features/auth/SignInForm";
 
-import "./App.css";
-
 function App() {
   return (
     <Router>
       <Header />
-      <div className="App">
+      <div>
         <Switch>
           <Route
             exact
