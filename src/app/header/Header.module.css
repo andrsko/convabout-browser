@@ -1,7 +1,8 @@
 header {
   top: 0;
   left: 0;
-  position: fixed;
+  position: sticky;
+  position: -webkit-sticky; /* Safari */
   width: 100%;
   background-color: white;
   padding-left: 25px;
@@ -9,6 +10,7 @@ header {
   border-bottom: 1px solid #e7e7e7;
   display: flex;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 header .logo {
@@ -95,6 +97,9 @@ nav button img {
 
 @media only screen and (min-width: 768px) {
   /* desktop */
+  header {
+    margin-bottom: 20px;
+  }
   .dropdownMenu {
     right: auto;
     left: 50%;
