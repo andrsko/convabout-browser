@@ -5,9 +5,9 @@ const initialState = {
   token: "",
   username: "",
   signUpStatus: "idle",
-  signUpError: null,
+  signUpError: "",
   signInStatus: "idle",
-  signInError: null,
+  signInError: "",
 };
 
 export const signUp = createAsyncThunk("auth/signUp", async (user) => {
@@ -32,10 +32,19 @@ const authSlice = createSlice({
       state.token = "";
       state.username = "";
     },
+    resumeSignUp(state) {
+      state.signUpStatus = "idle";
+      state.signUpError = "";
+    },
+    resumeSignIn(state) {
+      state.signInStatus = "idle";
+      state.signInError = "";
+    },
   },
   extraReducers: {
     [signUp.pending]: (state, action) => {
       state.signUpStatus = "loading";
+      state.signUperror = "";
     },
     [signUp.fulfilled]: (state, action) => {
       state.signUpStatus = "succeeded";
@@ -48,6 +57,7 @@ const authSlice = createSlice({
     },
     [signIn.pending]: (state, action) => {
       state.signInStatus = "loading";
+      state.signUperror = "";
     },
     [signIn.fulfilled]: (state, action) => {
       state.signInStatus = "succeeded";
@@ -61,6 +71,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { signOut } = authSlice.actions;
+export const { signOut, resumeSignUp, resumeSignIn } = authSlice.actions;
 
 export default authSlice.reducer;
