@@ -1,0 +1,78 @@
+.chatWindow {
+  padding: 10px;
+}
+
+.chatWindow form {
+  position: relative;
+  padding-top: 5px;
+}
+
+.usernameInput {
+  border: none;
+  border-bottom: 1px solid #b3b3b3;
+  font-size: inherit;
+  margin-bottom: 10px;
+  padding: 0;
+}
+
+.messageInput {
+  font-family: inherit;
+  font-size: inherit;
+  max-height: 100px;
+  padding: 0;
+  width: calc(100% - 35px);
+  resize: none;
+  border: none;
+  border-bottom: 1px solid #b3b3b3;
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+.messageInput::-webkit-scrollbar {
+  /* WebKit */
+  width: 0;
+  height: 0;
+}
+
+.usernameInput::placeholder,
+.messageInput::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  font-family: "placeholderFont", Arial, Helvetica, sans-serif;
+  opacity: 1; /* Firefox */
+  color: #b3b3b3;
+}
+
+.usernameInput:-ms-input-placeholder,
+.messageInput:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  font-family: "placeholderFont", Arial, Helvetica, sans-serif;
+  color: #b3b3b3;
+}
+
+.usernameInput::-ms-input-placeholder,
+.messageInput::-ms-input-placeholder {
+  /* Microsoft Edge */
+  font-family: "placeholderFont", Arial, Helvetica, sans-serif;
+  color: #b3b3b3;
+}
+
+.send {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.send img {
+  height: 30px;
+  width: 30px;
+}
+
+.sendLoader {
+  position: absolute;
+  right: 5px;
+  top: 0;
+}

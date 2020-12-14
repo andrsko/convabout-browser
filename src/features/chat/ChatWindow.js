@@ -5,10 +5,15 @@ import { useLocation } from "react-router-dom";
 //import { Socket } from "phoenix";
 
 import store from "../../app/store";
-import { signUp } from "../auth/authSlice";
+import { signUp, resumeSignUp } from "../auth/authSlice";
+import { SignUpErrorHandler } from "../auth/SignUpErrorHandler";
 import { newMessage, clearLog } from "./chatSlice";
 import { WebSocketContext } from "../../app/websocket";
 import { MessageList } from "./MessageList";
+
+import { Loader } from "../../shared/Loader";
+import send from "./send.svg";
+import styles from "./ChatWindow.module.css";
 
 export const ChatWindow = () => {
   let location = useLocation();
@@ -46,8 +51,10 @@ export const ChatWindow = () => {
   }, [firstMessage]);
   let token = store.getState().auth.token;
 
-  const signUpRequestStatus = useSelector((state) => state.auth.signUpStatus);
-  const signUpError = useSelector((state) => state.auth.signUpError);
+  // resume signing up state on unmount
+  useEffect(() => dispatch(resumeSignUp()), [dispatch]);
+
+  const signUpStatus = useSelector((state) => state.auth.signUpStatus);
 
   // if signed up - token must be provided, else - username to sign up
   const canSend = (token || username) && message;
@@ -70,48 +77,60 @@ export const ChatWindow = () => {
     }
   };
 
-  const requestStatusMessageOptions = {
-    pending: "Loading...",
-    error: "Failed to sign up: " + signUpError,
-  };
-  const requestStatusMessage = (
-    <p>{requestStatusMessageOptions[signUpRequestStatus]}</p>
-  );
-
   // if not signed up provide the form to sign up while sending a message
   const SignUpForm = token ? null : (
     <React.Fragment>
-      {" "}
-      <label htmlFor="username">Username:</label>
       <input
+        className={styles.usernameInput}
         type="text"
-        id="username"
         name="username"
         placeholder="username"
+        maxLength="15"
         value={username}
         onChange={onUsernameChanged}
       />
     </React.Fragment>
   );
 
+  const sendButton =
+    signUpStatus === "loading" ? (
+      <div className={styles.sendLoader}>
+        <Loader size="small" compact />
+      </div>
+    ) : (
+      <button
+        className={styles.send}
+        type="button"
+        onClick={onSendMessageClick}
+        disabled={!canSend}
+      >
+        <img src={send} alt="send" />
+      </button>
+    );
+
+  // used to auto resize message input
+  const autoResize = (e) => {
+    e.target.style.height = "";
+    e.target.style.height = e.target.scrollHeight + "px";
+  };
+
   return (
-    <section id="chat-window">
-      <h2>Chat</h2>
+    <section className={styles.chatWindow}>
       <MessageList />
-      <form id="message-form">
+      {SignUpErrorHandler()}
+      <form>
         {SignUpForm}
-        <input
-          type="text"
-          id="message"
+        <textarea
+          className={styles.messageInput}
           name="message"
           value={message}
+          placeholder="Write a message..."
+          rows="1"
+          onInput={autoResize}
           onChange={onMessageChanged}
         />
-        <button type="button" onClick={onSendMessageClick} disabled={!canSend}>
-          Send Message
-        </button>
+        {sendButton}
       </form>
-      {requestStatusMessage}
     </section>
   );
 };
