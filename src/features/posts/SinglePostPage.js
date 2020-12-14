@@ -5,6 +5,10 @@ import { useLocation } from "react-router-dom";
 import timeAgo from "../../utils/timeAgo";
 import { fetchPost } from "./postsSlice";
 
+import { Loader } from "../../shared/Loader";
+
+import styles from "./SinglePostPage.module.css";
+
 export const SinglePostPage = () => {
   let location = useLocation();
   const dispatch = useDispatch();
@@ -21,20 +25,19 @@ export const SinglePostPage = () => {
   let content;
 
   if (postStatus === "loading") {
-    content = <div className="loader">Loading...</div>;
+    content = <Loader size={"medium"} />;
   } else if (postStatus === "succeeded") {
     content = (
       <div>
-        <h2>{post.title}</h2>
-        <div>
-          <p>{post.username}</p>
-          <p>{timeAgo(post.inserted_at)}</p>
-        </div>
+        <h1 className={styles.postTitle}>{post.title}</h1>
+        <p className={styles.postInfo}>
+          {`by ${post.username} ${timeAgo(post.inserted_at)}`}
+        </p>
       </div>
     );
   } else if (postStatus === "error") {
     content = <div>{error}</div>;
   }
 
-  return <section>{content}</section>;
+  return <section className={styles.post}>{content}</section>;
 };
