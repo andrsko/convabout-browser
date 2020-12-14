@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import App from "./App";
 import store, { persistor } from "./app/store";
 import WebSocketProvider from "./app/websocket";
