@@ -50,6 +50,7 @@ export const SignUpForm = () => {
           type="text"
           id="username"
           name="username"
+          maxLength="15"
           value={username}
           onChange={onUsernameChanged}
         />
