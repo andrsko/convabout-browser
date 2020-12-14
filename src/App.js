@@ -23,15 +23,7 @@ function App() {
       <Header />
       <div>
         <Switch>
-          <Route
-            exact
-            path="/"
-            render={() => (
-              <React.Fragment>
-                <PostList />
-              </React.Fragment>
-            )}
-          />
+          <Route exact path="/" component={PostList} />
           <Route exact path="/signup" component={SignUpForm} />
           <Route exact path="/signin" component={SignInForm} />
           <Route exact path="/submit" component={AddPostForm} />
