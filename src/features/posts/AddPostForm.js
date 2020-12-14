@@ -1,11 +1,15 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { unwrapResult } from "@reduxjs/toolkit";
 import store from "../../app/store";
 
 import { addNewPost } from "./postsSlice";
-import { signUp } from "../auth/authSlice";
+import { signUp, resumeSignUp } from "../auth/authSlice";
+import { SignUpErrorHandler } from "../auth/SignUpErrorHandler";
+import { Loader } from "../../shared/Loader";
+
+import styles from "./AddPostForm.module.css";
 
 export const AddPostForm = () => {
   const [username, setUsername] = useState("");
@@ -15,6 +19,8 @@ export const AddPostForm = () => {
   const onTitleChanged = (e) => setTitle(e.target.value);
 
   const [requestStatus, setRequestStatus] = useState("idle");
+
+  const signUpStatus = useSelector((state) => state.auth.signUpStatus);
 
   const dispatch = useDispatch();
   let history = useHistory();
@@ -26,7 +32,7 @@ export const AddPostForm = () => {
   const onSavePostClick = async () => {
     if (canSave) {
       try {
-        setRequestStatus("pending");
+        setRequestStatus("loading");
 
         // if not signed up - sign up and get newly obtained token
         if (!token) {
@@ -49,49 +55,57 @@ export const AddPostForm = () => {
     }
   };
 
-  const requestStatusMessageOptions = {
-    pending: "Loading...",
-    error: "An Error Occured",
-  };
-  const requestStatusMessage = (
-    <p>{requestStatusMessageOptions[requestStatus]}</p>
-  );
+  // resume signing up state
+  useEffect(() => dispatch(resumeSignUp()), [dispatch]);
 
   // if not signed up provide the form to sign up while creating a post
   const SignUpForm = token ? null : (
     <React.Fragment>
-      {" "}
       <label htmlFor="username">Username:</label>
       <input
         type="text"
-        id="username"
         name="username"
-        placeholder="username"
+        id="username"
+        maxLength="15"
         value={username}
         onChange={onUsernameChanged}
       />
     </React.Fragment>
   );
 
+  let buttonContent, buttonClassName;
+  if (signUpStatus === "loading" || requestStatus === "loading") {
+    buttonContent = <Loader size="small" compact />;
+    buttonClassName = styles.loading;
+  } else {
+    buttonContent = "POST";
+    buttonClassName = "";
+  }
+
   return (
-    <section>
-      <h2>Add a New Post</h2>
-      <form>
+    <section className={styles.addPost}>
+      <h1 className={styles.addPostHeading}>Start a new conversation</h1>
+      <form className={styles.addPostForm}>
         {SignUpForm}
-        <label htmlFor="postTitle">Post Title:</label>
-        <input
-          type="text"
-          id="postTitle"
+        <label htmlFor="postTitle">Title:</label>
+        <textarea
           name="postTitle"
-          placeholder="Title"
+          id="postTitle"
+          rows="3"
+          maxLength="150"
           value={title}
           onChange={onTitleChanged}
         />
-        <button type="button" onClick={onSavePostClick} disabled={!canSave}>
-          Save Post
+        {SignUpErrorHandler()}
+        <button
+          className={buttonClassName}
+          type="button"
+          onClick={onSavePostClick}
+          disabled={!canSave}
+        >
+          {buttonContent}
         </button>
       </form>
-      {requestStatusMessage}
     </section>
   );
 };
