@@ -1,0 +1,49 @@
+.postList {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.postExcerpt {
+  padding-left: 3%;
+  padding-right: 3%;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  margin-bottom: 5px;
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 2px 2px 5px #eeeeee;
+}
+
+.postTitle {
+  font-size: 18px;
+  margin: 0;
+  line-height: 1.25em;
+}
+
+a {
+  text-decoration: none;
+  color: #187bdd;
+}
+
+.postInfo {
+  color: #959595;
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+@media only screen and (min-width: 768px) {
+  .postList {
+    margin-left: 12%;
+    width: 610px;
+  }
+  .postExcerpt {
+    margin-bottom: 10px;
+    padding: 15px;
+  }
+
+  .postExcerpt:hover {
+    border-color: #d3d3d3;
+  }
+}

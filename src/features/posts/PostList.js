@@ -5,17 +5,21 @@ import { Link } from "react-router-dom";
 import timeAgo from "../../utils/timeAgo";
 import { fetchPosts } from "./postsSlice";
 
+import { Loader } from "../../shared/Loader";
+
+import styles from "./PostList.module.css";
+
 const PostExcerpt = ({ post }) => {
   return (
-    <article className="post-excerpt" key={post.id}>
-      <Link to={`/chat?p=${post.id}`}>
-        <h3>{post.title}</h3>
-      </Link>
-      <div>
-        <p>{timeAgo(post.inserted_at)}</p>
-      </div>
-      View Post
-    </article>
+    <Link to={`/chat?p=${post.id}`}>
+      <article className={styles.postExcerpt} key={post.id}>
+        <p className={styles.postTitle}>{post.title}</p>
+
+        <p className={styles.postInfo}>
+          {`by ${post.username} ${timeAgo(post.inserted_at)}`}
+        </p>
+      </article>
+    </Link>
   );
 };
 
@@ -35,7 +39,7 @@ export const PostList = () => {
   let content;
 
   if (postsStatus === "loading") {
-    content = <div className="loader">Loading...</div>;
+    content = <Loader size="large" />;
   } else if (postsStatus === "succeeded") {
     // Sort posts in reverse chronological order by datetime string
     const orderedPosts = posts
@@ -46,13 +50,8 @@ export const PostList = () => {
       <PostExcerpt key={post.id} post={post} />
     ));
   } else if (postsStatus === "error") {
-    content = <div>{error}</div>;
+    content = <div className="error">{error}</div>;
   }
 
-  return (
-    <section className="post-list">
-      <h2>Posts</h2>
-      {content}
-    </section>
-  );
+  return <section className={styles.postList}>{content}</section>;
 };
