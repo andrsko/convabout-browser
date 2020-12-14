@@ -1,0 +1,21 @@
+.messageExcerpt {
+  margin-bottom: 10px;
+}
+
+.messageExcerpt p {
+  display: inline;
+}
+
+.author {
+  font-weight: 700;
+  margin-right: 5px;
+}
+
+.body {
+  margin-right: 10px;
+}
+
+.timestamp {
+  color: #b5b5b5;
+  font-size: 12px;
+}
