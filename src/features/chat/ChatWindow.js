@@ -70,7 +70,7 @@ export const ChatWindow = () => {
   const signUpStatus = useSelector((state) => state.auth.signUpStatus);
 
   // if signed up - token must be provided, else - username to sign up
-  const canSend = (token || username) && message;
+  const canSend = (token || (username && isUsernameValid)) && message;
   const onSendMessageClick = async () => {
     if (canSend) {
       if (token) channel.current.push("shout", { body: message });

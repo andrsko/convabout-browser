@@ -42,8 +42,7 @@ export const AddPostForm = () => {
 
   // if signed up - token must be provided, else - username to sign up
   const canSave =
-    (token || username) &&
-    isUsernameValid &&
+    (token || (username && isUsernameValid)) &&
     title &&
     requestStatus !== "loading";
 
