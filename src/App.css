@@ -10,6 +10,18 @@ body {
   background-color: #f3f3f3;
 }
 
+/* When mouse is detected, all focused elements have outline removed. */
+body.usingMouse :focus {
+  outline: 0px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+body.usingMouse :active :hover {
+  outline: 0px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
 .error {
   color: #c0392b;
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -17,6 +17,30 @@ import { SignInForm } from "./features/auth/SignInForm";
 import "./App.css";
 
 function App() {
+  useEffect(() => {
+    console.log("INSIDE");
+    function useMouse() {
+      document.body.classList.add("usingMouse");
+    }
+
+    function checkTabSetDefault(e) {
+      if (e.keyCode === 9) {
+        document.body.classList.remove("usingMouse");
+      }
+    }
+    // Let the document know when the mouse is being used
+    document.body.addEventListener("mousedown", useMouse);
+
+    // Re-enable focus styling when Tab is pressed
+    document.body.addEventListener("keydown", checkTabSetDefault);
+
+    return () => {
+      // Unbind the event listeners on clean up
+      document.removeEventListener("mousedown", useMouse);
+      document.removeEventListener("keydown", checkTabSetDefault);
+    };
+  }, []);
+
   return (
     <Router>
       <Header />
