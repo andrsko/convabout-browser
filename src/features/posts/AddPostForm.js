@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { unwrapResult } from "@reduxjs/toolkit";
 import store from "../../app/store";
 
-import { addNewPost } from "./postsSlice";
+import { addNewPost, fetchPosts } from "./postsSlice";
 import { signUp, resumeSignUp } from "../auth/authSlice";
 import {
   usernameMaxLength,
@@ -64,6 +64,7 @@ export const AddPostForm = () => {
           addNewPost({ token, post: { title } })
         );
         unwrapResult(addNewPostResultAction);
+        dispatch(fetchPosts());
         history.push("/");
       } catch (err) {
         console.error("Failed to save the post: ", err);
