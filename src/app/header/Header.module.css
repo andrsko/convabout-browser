@@ -71,6 +71,7 @@ nav button img {
   text-decoration: none;
   display: block;
   font-size: 16px;
+  color: #313131;
 }
 
 .dropdownMenu *:hover {
@@ -83,8 +84,11 @@ nav button img {
 
 .dropdownMenu button {
   width: 100%;
-  border-radius: 0;
   text-align: left;
+}
+
+.dropdownMenu button:hover {
+  border-radius: 0;
 }
 
 /* phone */
