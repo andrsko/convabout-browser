@@ -111,7 +111,7 @@ export const AddPostForm = () => {
           name="postTitle"
           id="postTitle"
           rows="3"
-          maxLength="150"
+          maxLength="255"
           value={title}
           onChange={onTitleChanged}
         />
