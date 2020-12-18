@@ -6,7 +6,11 @@ import { useLocation } from "react-router-dom";
 
 import store from "../../app/store";
 import { signUp, resumeSignUp } from "../auth/authSlice";
-import { usernameMaxLength } from "../auth/inputConstraints";
+import {
+  usernameMaxLength,
+  usernameRegex,
+  invalidUsernameMessage,
+} from "../auth/inputConstraints";
 import { SignUpErrorHandler } from "../auth/SignUpErrorHandler";
 import { newMessage, clearLog } from "./chatSlice";
 import { WebSocketContext } from "../../app/websocket";
@@ -54,6 +58,14 @@ export const ChatWindow = () => {
 
   // resume signing up state on unmount
   useEffect(() => dispatch(resumeSignUp()), [dispatch]);
+
+  const isUsernameValid = username.match(usernameRegex);
+  const invalidUsernameError =
+    username && !isUsernameValid ? (
+      <p className={"error " + styles.invalidUsernameError}>
+        {invalidUsernameMessage}
+      </p>
+    ) : null;
 
   const signUpStatus = useSelector((state) => state.auth.signUpStatus);
 
@@ -121,6 +133,7 @@ export const ChatWindow = () => {
       {SignUpErrorHandler()}
       <form>
         {SignUpForm}
+        {invalidUsernameError}
         <textarea
           className={styles.messageInput}
           name="message"

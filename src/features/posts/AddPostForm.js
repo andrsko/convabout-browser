@@ -6,7 +6,11 @@ import store from "../../app/store";
 
 import { addNewPost } from "./postsSlice";
 import { signUp, resumeSignUp } from "../auth/authSlice";
-import { usernameMaxLength } from "../auth/inputConstraints";
+import {
+  usernameMaxLength,
+  usernameRegex,
+  invalidUsernameMessage,
+} from "../auth/inputConstraints";
 import { SignUpErrorHandler } from "../auth/SignUpErrorHandler";
 import { Loader } from "../../shared/Loader";
 
@@ -28,8 +32,21 @@ export const AddPostForm = () => {
 
   let token = store.getState().auth.token;
 
+  const isUsernameValid = username.match(usernameRegex);
+  const invalidUsernameError =
+    username && !isUsernameValid ? (
+      <p className={"error " + styles.invalidUsernameError}>
+        {invalidUsernameMessage}
+      </p>
+    ) : null;
+
   // if signed up - token must be provided, else - username to sign up
-  const canSave = (token || username) && title && requestStatus !== "loading";
+  const canSave =
+    (token || username) &&
+    isUsernameValid &&
+    title &&
+    requestStatus !== "loading";
+
   const onSavePostClick = async () => {
     if (canSave) {
       try {
@@ -88,6 +105,7 @@ export const AddPostForm = () => {
       <h1 className={styles.addPostHeading}>Start a new conversation</h1>
       <form className={styles.addPostForm}>
         {SignUpForm}
+        {invalidUsernameError}
         <label htmlFor="postTitle">Title:</label>
         <textarea
           name="postTitle"

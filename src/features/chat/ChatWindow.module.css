@@ -76,3 +76,7 @@
   right: 5px;
   top: 0;
 }
+
+.invalidUsernameError {
+  margin-top: 0;
+}
