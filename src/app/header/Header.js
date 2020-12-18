@@ -68,7 +68,9 @@ export const Header = () => {
 
   return (
     <header>
-      <img src={logo} className={styles.logo} alt="logo" />
+      <Link to="/">
+        <img src={logo} className={styles.logo} alt="logo" />
+      </Link>
       <nav>
         <Link to="/">
           <button>
