@@ -6,6 +6,7 @@ import store from "../../app/store";
 
 import { addNewPost } from "./postsSlice";
 import { signUp, resumeSignUp } from "../auth/authSlice";
+import { usernameMaxLength } from "../auth/inputConstraints";
 import { SignUpErrorHandler } from "../auth/SignUpErrorHandler";
 import { Loader } from "../../shared/Loader";
 
@@ -66,7 +67,7 @@ export const AddPostForm = () => {
         type="text"
         name="username"
         id="username"
-        maxLength="15"
+        maxLength={usernameMaxLength}
         value={username}
         onChange={onUsernameChanged}
       />

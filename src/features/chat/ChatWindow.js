@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 
 import store from "../../app/store";
 import { signUp, resumeSignUp } from "../auth/authSlice";
+import { usernameMaxLength } from "../auth/inputConstraints";
 import { SignUpErrorHandler } from "../auth/SignUpErrorHandler";
 import { newMessage, clearLog } from "./chatSlice";
 import { WebSocketContext } from "../../app/websocket";
@@ -85,7 +86,7 @@ export const ChatWindow = () => {
         type="text"
         name="username"
         placeholder="username"
-        maxLength="15"
+        maxLength={usernameMaxLength}
         value={username}
         onChange={onUsernameChanged}
       />

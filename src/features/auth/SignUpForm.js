@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { unwrapResult } from "@reduxjs/toolkit";
 
 import { signUp } from "./authSlice";
+import { usernameMaxLength } from "../auth/inputConstraints";
 
 export const SignUpForm = () => {
   const [username, setUsername] = useState("");
@@ -50,7 +51,7 @@ export const SignUpForm = () => {
           type="text"
           id="username"
           name="username"
-          maxLength="15"
+          maxLength={usernameMaxLength}
           value={username}
           onChange={onUsernameChanged}
         />
