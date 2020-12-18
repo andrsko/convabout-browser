@@ -17,8 +17,8 @@ import { SignInForm } from "./features/auth/SignInForm";
 import "./App.css";
 
 function App() {
+  //switch focus styling
   useEffect(() => {
-    console.log("INSIDE");
     function useMouse() {
       document.body.classList.add("usingMouse");
     }
