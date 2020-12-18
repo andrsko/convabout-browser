@@ -26,6 +26,13 @@ body.usingMouse :active :hover {
   color: #c0392b;
 }
 
+textarea,
+input {
+  color: #313131;
+  font-family: inherit;
+  font-size: inherit;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

@@ -10,14 +10,11 @@
 .usernameInput {
   border: none;
   border-bottom: 1px solid #b3b3b3;
-  font-size: inherit;
   margin-bottom: 10px;
   padding: 0;
 }
 
 .messageInput {
-  font-family: inherit;
-  font-size: inherit;
   max-height: 100px;
   padding: 0;
   width: calc(100% - 35px);
