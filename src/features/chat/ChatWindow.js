@@ -71,8 +71,14 @@ export const ChatWindow = () => {
 
   // if signed up - token must be provided, else - username to sign up
   const canSend = (token || (username && isUsernameValid)) && message;
+  const messageInputRef = useRef(null);
   const onSendMessageClick = async () => {
     if (canSend) {
+      //reset message input
+      messageInputRef.current.value = "";
+      messageInputRef.current.style.height = "";
+      messageInputRef.current.focus();
+
       if (token) channel.current.push("shout", { body: message });
       else {
         try {
@@ -135,6 +141,7 @@ export const ChatWindow = () => {
         {SignUpForm}
         {invalidUsernameError}
         <textarea
+          ref={messageInputRef}
           className={styles.messageInput}
           name="message"
           value={message}
