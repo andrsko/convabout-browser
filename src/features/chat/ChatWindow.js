@@ -127,6 +127,8 @@ export const ChatWindow = () => {
       </button>
     );
 
+  useEffect(() => messageInputRef.current.focus(), []);
+
   // used to auto resize message input
   const autoResize = (e) => {
     e.target.style.height = "";

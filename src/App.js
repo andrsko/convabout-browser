@@ -34,6 +34,10 @@ function App() {
     // Re-enable focus styling when Tab is pressed
     document.body.addEventListener("keydown", checkTabSetDefault);
 
+    /* set default to using mouse 
+       (focus element on load w/out outline) */
+    document.body.classList.add("usingMouse");
+
     return () => {
       // Unbind the event listeners on clean up
       document.removeEventListener("mousedown", useMouse);
