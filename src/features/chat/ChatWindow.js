@@ -131,6 +131,7 @@ export const ChatWindow = () => {
   const autoResize = (e) => {
     e.target.style.height = "";
     e.target.style.height = e.target.scrollHeight + "px";
+    window.scrollTo(0, document.body.scrollHeight);
   };
 
   return (
