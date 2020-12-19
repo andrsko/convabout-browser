@@ -95,9 +95,11 @@ export const ChatWindow = () => {
   };
 
   // if not signed up provide the form to sign up while sending a message
+  const usernameInputRef = useRef(null);
   const SignUpForm = token ? null : (
     <React.Fragment>
       <input
+        ref={usernameInputRef}
         className={styles.usernameInput}
         type="text"
         name="username"
@@ -125,7 +127,10 @@ export const ChatWindow = () => {
       </button>
     );
 
-  useEffect(() => messageInputRef.current.focus(), []);
+  useEffect(() => {
+    if (token) messageInputRef.current.focus();
+    else usernameInputRef.current.focus();
+  }, [token]);
 
   // used to auto resize message input
   const autoResize = (e) => {
