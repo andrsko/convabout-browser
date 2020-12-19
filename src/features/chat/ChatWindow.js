@@ -134,6 +134,15 @@ export const ChatWindow = () => {
     window.scrollTo(0, document.body.scrollHeight);
   };
 
+  // send message on Enter
+  function onMessageInputKeyDown(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      event.stopPropagation();
+      onSendMessageClick();
+    }
+  }
+
   return (
     <section className={styles.chatWindow}>
       <MessageList />
@@ -148,6 +157,7 @@ export const ChatWindow = () => {
           value={message}
           placeholder="Write a message..."
           rows="1"
+          onKeyDown={(e) => onMessageInputKeyDown(e)}
           onInput={autoResize}
           onChange={onMessageChanged}
         />
