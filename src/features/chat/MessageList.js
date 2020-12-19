@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import styles from "./MessageList.module.css";
@@ -23,6 +23,9 @@ const MessageExcerpt = ({ message }) => {
 
 export const MessageList = () => {
   const messages = useSelector((state) => state.chat.log);
+  useEffect(() => {
+    window.scrollTo(0, document.body.scrollHeight);
+  }, [messages]);
   const content = messages.map((message) => (
     <MessageExcerpt key={message.id} message={message} />
   ));
