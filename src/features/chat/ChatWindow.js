@@ -50,8 +50,12 @@ export const ChatWindow = () => {
 
   useEffect(() => {
     if (firstMessage) {
+      // send message
       channel.current.push("shout", { body: firstMessage });
-      setFirstMessage("");
+
+      //reset message input
+      setMessage("");
+      messageInputRef.current.style.height = "";
     }
   }, [firstMessage]);
   let token = store.getState().auth.token;
@@ -75,8 +79,12 @@ export const ChatWindow = () => {
   const onSendMessageClick = async () => {
     if (canSend) {
       if (token) {
-        setMessage("");
+        // send message
         channel.current.push("shout", { body: message });
+
+        // reset message input
+        setMessage("");
+        messageInputRef.current.style.height = "";
       } else {
         try {
           const signUpResultAction = await dispatch(
@@ -86,7 +94,6 @@ export const ChatWindow = () => {
           token = store.getState().auth.token;
 
           setFirstMessage(message);
-          setMessage("");
         } catch (err) {
           console.error("Failed to sign up: ", err);
         }
