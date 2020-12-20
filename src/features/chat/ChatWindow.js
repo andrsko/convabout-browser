@@ -12,7 +12,7 @@ import {
   invalidUsernameMessage,
 } from "../auth/inputConstraints";
 import { SignUpErrorHandler } from "../auth/SignUpErrorHandler";
-import { newMessage, clearLog } from "./chatSlice";
+import { newMessage, clearLog, setFirstMessage } from "./chatSlice";
 import { WebSocketContext } from "../../app/websocket";
 import { MessageList } from "./MessageList";
 
@@ -30,7 +30,7 @@ export const ChatWindow = () => {
   const [message, setMessage] = useState("");
   const onMessageChanged = (e) => setMessage(e.target.value);
 
-  const [firstMessage, setFirstMessage] = useState("");
+  const firstMessage = useSelector((state) => state.chat.firstMessage);
 
   const dispatch = useDispatch();
   const socket = useContext(WebSocketContext);
@@ -93,7 +93,7 @@ export const ChatWindow = () => {
           unwrapResult(signUpResultAction);
           token = store.getState().auth.token;
 
-          setFirstMessage(message);
+          dispatch(setFirstMessage(message));
         } catch (err) {
           console.error("Failed to sign up: ", err);
         }

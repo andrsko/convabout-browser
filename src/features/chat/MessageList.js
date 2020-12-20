@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+import { setFirstMessage } from "./chatSlice";
 
 import styles from "./MessageList.module.css";
 
@@ -23,9 +25,28 @@ const MessageExcerpt = ({ message }) => {
 
 export const MessageList = () => {
   const messages = useSelector((state) => state.chat.log);
+  const firstMessage = useSelector((state) => state.chat.firstMessage);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    window.scrollTo(0, document.body.scrollHeight);
-  }, [messages]);
+    // scroll if received message is the first message sent on signing up
+    if (messages.length && firstMessage) {
+      const receivedMessage = messages[messages.length - 1];
+      if (receivedMessage.body === firstMessage) {
+        window.scrollTo(0, document.body.scrollHeight);
+        dispatch(setFirstMessage(""));
+      }
+    }
+
+    //scroll on new message automatically only if scroll position is near bottom
+    if (
+      window.scrollY &&
+      window.innerHeight + window.scrollY >= document.body.scrollHeight - 250
+    )
+      window.scrollTo(0, document.body.scrollHeight);
+  }, [messages, firstMessage, dispatch]);
+
   const content = messages.map((message) => (
     <MessageExcerpt key={message.id} message={message} />
   ));
