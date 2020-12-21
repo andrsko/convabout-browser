@@ -4,7 +4,6 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { useLocation } from "react-router-dom";
 //import { Socket } from "phoenix";
 
-import store from "../../app/store";
 import { signUp, resumeSignUp } from "../auth/authSlice";
 import {
   usernameMaxLength,
@@ -12,7 +11,13 @@ import {
   invalidUsernameMessage,
 } from "../auth/inputConstraints";
 import { SignUpErrorHandler } from "../auth/SignUpErrorHandler";
-import { newMessage, clearLog, setFirstMessage } from "./chatSlice";
+import {
+  newMessage,
+  clearLog,
+  setFirstMessage,
+  captureLogTillFirstMessage,
+  restoreLogTillFirstMessage,
+} from "./chatSlice";
 import { WebSocketContext } from "../../app/websocket";
 import { MessageList } from "./MessageList";
 
@@ -35,6 +40,8 @@ export const ChatWindow = () => {
   const dispatch = useDispatch();
   const socket = useContext(WebSocketContext);
 
+  const token = useSelector((state) => state.auth.token);
+
   const channel = useRef(null);
   useEffect(() => {
     channel.current = socket.channel("chat:" + postId, {});
@@ -49,16 +56,23 @@ export const ChatWindow = () => {
   }, [postId, socket, dispatch]);
 
   useEffect(() => {
-    if (firstMessage) {
-      // send message
+    // on signing up
+    if (firstMessage && token) {
+      // copy from buffer filled before log flush on
+      // socket reconnection and chanel rejoin
+      dispatch(restoreLogTillFirstMessage());
+
+      // send submitted message after successful signing up
+      // and reset firstMessage
+      // so it's not sent on every chat opening
       channel.current.push("shout", { body: firstMessage });
+      dispatch(setFirstMessage(""));
 
       //reset message input
       setMessage("");
       messageInputRef.current.style.height = "";
     }
-  }, [firstMessage]);
-  let token = store.getState().auth.token;
+  }, [firstMessage, token, dispatch]);
 
   // resume signing up state on unmount
   useEffect(() => dispatch(resumeSignUp()), [dispatch]);
@@ -87,13 +101,19 @@ export const ChatWindow = () => {
         messageInputRef.current.style.height = "";
       } else {
         try {
+          // copy to buffer to check for incoming message presence
+          // after socket reconnection and channel rejoin
+          // so layout doesn't get rerendered
+          dispatch(captureLogTillFirstMessage());
+
+          // to send later as signed up user
+          // after socket reconnection and channel rejoin
+          dispatch(setFirstMessage(message));
+
           const signUpResultAction = await dispatch(
             signUp({ username: username, password: "" })
           );
           unwrapResult(signUpResultAction);
-          token = store.getState().auth.token;
-
-          dispatch(setFirstMessage(message));
         } catch (err) {
           console.error("Failed to sign up: ", err);
         }
