@@ -22,6 +22,14 @@ body.usingMouse :active :hover {
   box-shadow: none;
 }
 
+/* Show cursor only on input or textarea focus */
+textarea:focus,
+input:focus {
+  outline: 0px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
 .error {
   color: #c0392b;
 }
