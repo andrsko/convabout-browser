@@ -16,18 +16,8 @@ const chatSlice = createSlice({
   initialState,
   reducers: {
     newMessage(state, action) {
-      /* if it's a message sent on singing up socket reconnection -
-         delete from buffer log - so in the end when buffer log empties the
-         only condition left to check is whether buffer log contains
-         any messages; if negative - all messages till first message were
-         already received and any new message can be pushed to log as usual */
-      if (state.logTillFirstMessage.length) {
-        const index = state.logTillFirstMessage.findIndex(function (message) {
-          return message.id === action.payload.id;
-        });
-        if (index !== -1) state.logTillFirstMessage.splice(index, 1);
-        else state.log.push(action.payload);
-      } else state.log.push(action.payload);
+      if (!state.log.some((message) => message["id"] === action.payload["id"]))
+        state.log.push(action.payload);
     },
     clearLog(state) {
       state.log = [];
